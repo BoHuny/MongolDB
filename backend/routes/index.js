@@ -8,6 +8,7 @@ export default (services) => {
         new NotifsRoutes(services["notifs"]),
         new UsersRoutes(services["users"])
     ]
+    
     let routes = {
         "":["GET", function (req, res) {
             res.send('Hello World!')
