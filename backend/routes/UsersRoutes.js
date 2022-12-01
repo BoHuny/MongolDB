@@ -1,3 +1,5 @@
+import Route from "./Route.js"
+
 export default class UsersRoutes {
     constructor(usersService) {
         this.usersService = usersService
@@ -5,11 +7,12 @@ export default class UsersRoutes {
 
     getRoutes() {
         const that = this
-        return {
-            "user":["GET", function (req, res) {
+        return [
+            new Route("users", "GET", false, function (req, res) {
                 const user = that.usersService.getUsers()
                 res.status(200).json(user)
-            }]
-        }
+            })
+        ]
+        
     }
 }

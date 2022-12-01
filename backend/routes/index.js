@@ -1,4 +1,5 @@
 import NotifsRoutes from "./NotifsRoutes.js"
+import Route from "./Route.js"
 import UsersRoutes from "./UsersRoutes.js"
 
 
@@ -9,15 +10,14 @@ export default (services) => {
         new UsersRoutes(services["users"])
     ]
     
-    let routes = {
-        "":["GET", function (req, res) {
+    let routes = [new Route("", "GET", false, function (req, res) {
             res.send('Hello World!')
             res.status(200).send()
-        }]
-    }
+        })
+    ]
 
     for (let i = 0; i < routesObjects.length; i++) {
-        routes = Object.assign({}, routes, routesObjects[i].getRoutes())
+        routes = routes.concat(routesObjects[i].getRoutes())
     }
 
     return routes

@@ -22,16 +22,20 @@ app.use(express.json())
 
 const routes = getRoutes(services)
 
-for (const routeName in routes) {
-    const route = routes[routeName]
-    if(route[0] === "GET"){
-      app.get('/' + routeName, (req, res) => {
-        route[1](req, res);
+for (let i = 0; i < routes.length; i++) {
+  const route = routes[i]
+  console.log(route)
+    if (route.needAuthent) {
+      // TODO Authent
+    } 
+    if(route.method === "GET"){
+      app.get('/' + route.path, (req, res) => {
+        route.callback(req, res)
       })
     }
     else {
-      app.post('/' + routeName, (req, res) => {
-        route[1](req, res);
+      app.post('/' + route.path, (req, res) => {
+        route.callback(req, res)
       })
     }
       

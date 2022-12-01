@@ -5,8 +5,6 @@ export default class NotifsRoutes {
 
     getRoutes() {
         const that = this
-        return {
-
-        }
+        return []
     }
 }

@@ -1,4 +1,4 @@
-import MongoDBEntity from './MongoDBEntity'
+import MongoDBEntity from './MongoDBEntity.js'
 
 export default class Notif extends MongoDBEntity {
     constructor(title, type, description, severity, date = null) {
