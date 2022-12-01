@@ -33,7 +33,7 @@ const services = {
 // console.log(result)
 
 // diseaseService.createDisease(new Disease("VIH", "C'est le VIH", 0.1, 60*24*5, 0.99, 0.9))
-userService.addDiseaseID("63891a76136dd44526e03e84", "6389355f684be98d5a24199d")
+// userService.addDiseaseID("63891a76136dd44526e03e84", "6389355f684be98d5a24199d")
 
 const app = express()
 const port = process.env.PORT
