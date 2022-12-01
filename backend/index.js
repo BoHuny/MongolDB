@@ -20,9 +20,18 @@ app.use(cors())
 const routes = getRoutes(services)
 
 for (const routeName in routes) {
-    app.get('/' + routeName, (req, res) => {
-        routes[routeName](req, res);
-    })
+    const route = routes[routName]
+    if(route[0] === "GET"){
+      app.get('/' + routeName, (req, res) => {
+        route[1](req, res);
+      })
+    }
+    else {
+      app.post('/' + routeName, (req, res) => {
+        route[1](req, res);
+      })
+    }
+      
   }
 
 app.listen(port, () => {
