@@ -7,8 +7,13 @@ export default class UsersService {
         this.usersCollection = database.collection('users')
     }
 
-    getUsers() {
-        return new User("coucou")
+    async getRandomUsers(sampleSize) {
+        const mongoUsers = this.usersCollection.aggregate([{$sample: { size: sampleSize}}])
+        const users = []
+        for await (const user of mongoUsers) {
+            users.push(user)
+        }
+        return users
     }
 
     createUser(user){
