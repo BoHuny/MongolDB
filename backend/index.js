@@ -6,7 +6,11 @@ import UsersService from './services/UsersService.js'
 import NotifsService from './services/NotifsService.js'
 
 import { MongoClient, ObjectId } from 'mongodb'
+<<<<<<< HEAD
 import Notif from './model/Notif.js'
+=======
+import { authenticateToken, generateAccessToken } from './utils/jwt.js'
+>>>>>>> 5d0156f64f7d04237b21311e6da11120073af447
 
 const uri ="mongodb://20.111.50.245:27017/"
 const database = new MongoClient(uri).db("mongolDB")
@@ -34,8 +38,11 @@ app.use(express.json())
 
 const routes = getRoutes(services)
 
+console.log(generateAccessToken("ABV"))
+
 for (let i = 0; i < routes.length; i++) {
   const route = routes[i]
+<<<<<<< HEAD
     if (route.needAuthent) {
       // TODO Authent
     } 
@@ -43,11 +50,17 @@ for (let i = 0; i < routes.length; i++) {
       app.get('/' + route.path, (req, res) => {
         route.callback(req, res)
       })
+=======
+    if(route.method === "GET") {
+        app.get('/' + route.path, (req, res, next) => authenticateToken(route.needAuthent, req, res, next), (req, res) => {
+          route.callback(req, res)
+        })
+>>>>>>> 5d0156f64f7d04237b21311e6da11120073af447
     }
     else {
-      app.post('/' + route.path, (req, res) => {
-        route.callback(req, res)
-      })
+        app.post('/' + route.path, (req, res, next) => authenticateToken(route.needAuthent, req, res, next), (req, res) => {
+          route.callback(req, res)
+        })
     }
       
   }
