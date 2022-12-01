@@ -1,13 +1,14 @@
 export default class UsersRoutes {
-    constructor(userService) {
-        this.userService = userService
+    constructor(usersService) {
+        this.usersService = usersService
     }
 
     getRoutes() {
+        const that = this
         return {
             "user":["GET", function (req, res) {
-                res.send('Hello user!')
-                res.status(200).send()
+                const user = that.usersService.getUsers()
+                res.status(200).json(user)
             }]
         }
     }
