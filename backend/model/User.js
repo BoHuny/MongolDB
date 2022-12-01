@@ -8,7 +8,7 @@ export default class User extends MongoDBEntity {
         this.description = description
         this.gender = gender
         this.isHuman = isHuman
-        this.profilPicture = null
+        this.profilePicture = null
         this.shownScore = 0
         this.realScore = 0
         this.listDiseases = []
