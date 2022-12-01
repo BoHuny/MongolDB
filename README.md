@@ -1,1 +1,2 @@
 # MongolDB
+run : "npm install"
