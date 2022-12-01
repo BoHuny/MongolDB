@@ -11,7 +11,7 @@ export default (services) => {
     ]
     
     let routes = [new Route("", "GET", false, function (req, res) {
-            res.send('Hello World!')
+            res.send("Hello world!")
             res.status(200).send()
         })
     ]

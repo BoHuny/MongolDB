@@ -6,8 +6,7 @@ import UsersService from './services/UsersService.js'
 import NotifsService from './services/NotifsService.js'
 
 import { MongoClient, ObjectId } from 'mongodb'
-import User from './model/User.js'
-import Notif from './model/Notif.js'
+import { authenticateToken, generateAccessToken } from './utils/jwt.js'
 
 const uri ="mongodb://20.111.50.245:27017/"
 const database = new MongoClient(uri).db("mongolDB")
@@ -31,21 +30,19 @@ app.use(express.json())
 
 const routes = getRoutes(services)
 
+console.log(generateAccessToken("ABV"))
+
 for (let i = 0; i < routes.length; i++) {
   const route = routes[i]
-  console.log(route)
-    if (route.needAuthent) {
-      // TODO Authent
-    } 
-    if(route.method === "GET"){
-      app.get('/' + route.path, (req, res) => {
-        route.callback(req, res)
-      })
+    if(route.method === "GET") {
+        app.get('/' + route.path, (req, res, next) => authenticateToken(route.needAuthent, req, res, next), (req, res) => {
+          route.callback(req, res)
+        })
     }
     else {
-      app.post('/' + route.path, (req, res) => {
-        route.callback(req, res)
-      })
+        app.post('/' + route.path, (req, res, next) => authenticateToken(route.needAuthent, req, res, next), (req, res) => {
+          route.callback(req, res)
+        })
     }
       
   }
