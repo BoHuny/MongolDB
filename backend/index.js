@@ -7,11 +7,6 @@ import NotifsService from './services/NotifsService.js'
 
 import { MongoClient } from 'mongodb'
 
-
-
-
-import Notif from './model/Notif.js'
-
 const uri ="mongodb://20.111.50.245:27017/"
 const database = new MongoClient(uri).db("mongolDB")
 
@@ -20,11 +15,10 @@ const services = {
     "notifs" : new NotifsService(database)
 }
 
-services.notifs.createNotifs(new Notif("test", 2, "Je suis un test", 3))
-
 const app = express()
 const port = process.env.PORT
 app.use(cors())
+app.use(express.json())
 
 const routes = getRoutes(services)
 
