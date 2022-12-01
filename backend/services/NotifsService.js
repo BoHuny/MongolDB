@@ -8,13 +8,13 @@ export default class NotifsService {
         this.userService = userService
     }
 
-    createNotif(notif) {
-        let result = this.notifsCollection.insertOne(notif);
+    async createNotif(notif) {
+        let result = await this.notifsCollection.insertOne(notif);
         return result
     }
 
     async createNotifForOneUser(userID, notif) {
-        await this.notifsCollection.insertOne(notif);
+        await this.createNotif(notif);
         await this.userService.addNotifID(userID, notif._id)
     }
 
