@@ -7,8 +7,13 @@ export default class UsersService {
         this.usersCollection = database.collection('users')
     }
 
-    getUsers() {
-        return new User("coucou")
+    async getRandomUsers(sampleSize) {
+        const mongoUsers = this.usersCollection.aggregate([{$sample: { size: sampleSize}}])
+        const users = []
+        for await (const user of mongoUsers) {
+            users.push(user)
+        }
+        return users
     }
 
     createUser(user){
@@ -21,6 +26,18 @@ export default class UsersService {
         const update = {
             $addToSet: {
                 listNotifs: new ObjectId(notifID)
+            },
+        };
+        const options = { upsert: true };
+        const result = await this.usersCollection.updateOne(filter, update, options);
+        return result
+    }
+
+    async addDiseaseID(userID, diseaseID){
+        const filter = { _id: new ObjectId(userID) };
+        const update = {
+            $addToSet: {
+                listDiseases: new ObjectId(diseaseID)
             },
         };
         const options = { upsert: true };

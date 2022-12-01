@@ -8,9 +8,9 @@ export default class UsersRoutes {
     getRoutes() {
         const that = this
         return [
-            new Route("users", "GET", false, function (req, res) {
-                const user = that.usersService.getUsers()
-                res.status(200).json(user)
+            new Route("getRandomUsers", "GET", false, async function (req, res) {
+                const randomUsers = await that.usersService.getRandomUsers(10)
+                res.status(200).json(randomUsers)
             })
         ]
         
