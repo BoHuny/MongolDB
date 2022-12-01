@@ -19,10 +19,6 @@ const services = {
     "notifs" : notifService
 }
 
-// await services.notifs.createNotifForOneUser(new ObjectId("63891a76136dd44526e03e84"), new Notif("BAISER", 2, "JE VEUX BAISER", 3))
-let notif = await services.notifs.getNotifs(new ObjectId("63891a76136dd44526e03e84"), true)
-console.log(notif)
-
 const app = express()
 const port = process.env.PORT
 app.use(cors())
