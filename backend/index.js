@@ -3,15 +3,24 @@ import cors from 'cors'
 import getRoutes from './routes/index.js'
 import 'dotenv/config'
 import UsersService from './services/UsersService.js'
+import NotifsService from './services/NotifsService.js'
 
 import { MongoClient } from 'mongodb'
 
+
+
+
+import Notif from './model/Notif.js'
+
 const uri ="mongodb://20.111.50.245:27017/"
-const client = new MongoClient(uri)
+const database = new MongoClient(uri).db("mongolDB")
 
 const services = {
-    "users" : new UsersService(client)
+    "users" : new UsersService(database),
+    "notifs" : new NotifsService(database)
 }
+
+services.notifs.createNotifs(new Notif("test", 2, "Je suis un test", 3))
 
 const app = express()
 const port = process.env.PORT
@@ -20,7 +29,7 @@ app.use(cors())
 const routes = getRoutes(services)
 
 for (const routeName in routes) {
-    const route = routes[routName]
+    const route = routes[routeName]
     if(route[0] === "GET"){
       app.get('/' + routeName, (req, res) => {
         route[1](req, res);
