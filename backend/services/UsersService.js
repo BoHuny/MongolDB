@@ -16,12 +16,12 @@ export default class UsersService {
         return users
     }
 
-    createUser(user){
+    createUser(user) {
         let result = this.usersCollection.insertOne(user);
         return result
     }
 
-    async addNotifID(userID, notifID){
+    async addNotifID(userID, notifID) {
         const filter = { _id: new ObjectId(userID) };
         const update = {
             $addToSet: {
@@ -33,7 +33,7 @@ export default class UsersService {
         return result
     }
 
-    async addDiseaseID(userID, diseaseID){
+    async addDiseaseID(userID, diseaseID) {
         const filter = { _id: new ObjectId(userID) };
         const update = {
             $addToSet: {
@@ -45,8 +45,15 @@ export default class UsersService {
         return result
     }
 
-    async getUserByID(idUser){
+    async getUserByID(idUser) {
         const queryUser = { _id: new ObjectId(idUser)}
+        const optionUser = {}
+        let user = await this.usersCollection.findOne(queryUser, optionUser);
+        return user
+    }
+
+    async getUserByName(pseudo) {
+        const queryUser = { pseudo: pseudo}
         const optionUser = {}
         let user = await this.usersCollection.findOne(queryUser, optionUser);
         return user
