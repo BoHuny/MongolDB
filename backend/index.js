@@ -10,10 +10,15 @@ import { MongoClient } from 'mongodb'
 const uri ="mongodb://20.111.50.245:27017/"
 const database = new MongoClient(uri).db("mongolDB")
 
+const userService = new UsersService(database)
+const notifService = new NotifsService(database, userService)
+
 const services = {
-    "users" : new UsersService(database),
-    "notifs" : new NotifsService(database)
+    "users" : userService,
+    "notifs" : notifService
 }
+
+services.notifs.getNotifs()
 
 const app = express()
 const port = process.env.PORT

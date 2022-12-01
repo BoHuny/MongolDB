@@ -1,10 +1,11 @@
 import User from "../model/Notif.js"
 
 export default class NotifsService {
-    constructor(client) {
-        this.client = client
-        this.notifsCollection = client.collection('notifs')
-        this.usersCollection = client.collection('users')
+    constructor(database, userService) {
+        this.database = database
+        this.notifsCollection = database.collection('notifs')
+        this.usersCollection = database.collection('users')
+        this.userService = userService
     }
 
     createNotifs(notif) {
@@ -13,13 +14,11 @@ export default class NotifsService {
     }
 
     async getNotifs(idUser, isRead) {
-        const queryUser = { _id: idUser}
-        const optionUser = {}
-        let user = await this.usersCollection.findOne(queryUser, optionUser);
+        let user = this.userService.getUserByID(idUser)
         notifsIds = user.listNotifs
         allNotifs = []
         notifsIds.forEach(idNotif => {
-            const queryNotif = {_id: idNotif}
+            const queryNotif = {_id: idNotif, isRead: isRead}
             const optionNotif = {}
             allNotifs.push(this.notifsCollection.findOne(queryNotif, optionNotif))
         });
