@@ -1,3 +1,4 @@
+import { ObjectId } from "mongodb";
 import User from "../model/User.js"
 
 export default class UsersService {
@@ -16,10 +17,10 @@ export default class UsersService {
     }
 
     async addNotifID(userID, notifID){
-        const filter = { _id: userID };
+        const filter = { _id: new ObjectId(userID) };
         const update = {
             $addToSet: {
-                listNotifs: notifID
+                listNotifs: new ObjectId(notifID)
             },
         };
         const options = { upsert: true };
@@ -28,7 +29,7 @@ export default class UsersService {
     }
 
     async getUserByID(idUser){
-        const queryUser = { _id: idUser}
+        const queryUser = { _id: new ObjectId(idUser)}
         const optionUser = {}
         let user = await this.usersCollection.findOne(queryUser, optionUser);
         return user

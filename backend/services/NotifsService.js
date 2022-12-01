@@ -1,3 +1,4 @@
+import { ObjectId } from "mongodb"
 import User from "../model/Notif.js"
 
 export default class NotifsService {
@@ -18,19 +19,43 @@ export default class NotifsService {
         await this.userService.addNotifID(userID, notif._id)
     }
 
-    async getNotifs(idUser, isRead) {
+    async getNotifsByIDUser(idUser, isRead) {
         let user = await this.userService.getUserByID(idUser)
-        let notifsIds = user.listNotifs
-        let allNotifs = []
-        for (let i = 0; i < notifsIds.length; i++) {
-            let notifId = notifsIds[i]
-            const queryNotif = {_id: notifId, isRead: isRead}
-            const optionNotif = {}
-            let resultNotif = await this.notifsCollection.findOne(queryNotif, optionNotif)
-            if(resultNotif !== null){
-                allNotifs.push(resultNotif)
+        if(user !== null){
+            let notifsIds = user.listNotifs
+            let allNotifs = []
+            for (let i = 0; i < notifsIds.length; i++) {
+                let notifId = notifsIds[i]
+                const queryNotif = {_id: notifId, isRead: isRead}
+                const optionNotif = {}
+                let resultNotif = await this.notifsCollection.findOne(queryNotif, optionNotif)
+                if(resultNotif !== null){
+                    allNotifs.push(resultNotif)
+                }
+            }
+            return allNotifs
+        }
+        return null
+    }
+
+    async readNotif(idNotif){
+        const filter = { _id: new ObjectId(idNotif) };
+        const update = {
+            $set:{
+                isRead: true
             }
         }
-        return allNotifs
+        const options = { upsert: true };
+        const result = await this.notifsCollection.updateOne(filter, update, options);
+        return result
+    }
+
+    async readAllNotifs(idUser){
+        let unreadNotifs = await this.getNotifsByIDUser(idUser, false)
+        if(unreadNotifs !== null){
+            for(let i = 0; i < unreadNotifs.length; i++){
+                this.readNotif(unreadNotifs[i]._id.toString())
+            }
+        }
     }
 }

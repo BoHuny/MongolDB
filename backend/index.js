@@ -6,6 +6,7 @@ import UsersService from './services/UsersService.js'
 import NotifsService from './services/NotifsService.js'
 
 import { MongoClient, ObjectId } from 'mongodb'
+import Notif from './model/Notif.js'
 import { authenticateToken, generateAccessToken } from './utils/jwt.js'
 
 const uri ="mongodb://20.111.50.245:27017/"
@@ -19,14 +20,20 @@ const services = {
     "notifs" : notifService
 }
 
+// let user = await userService.getUserByID("63891a76136dd44526e03e84")
+// console.log(user)
+
+// await notifService.createNotifForOneUser("63891a76136dd44526e03e84", new Notif("BZ BZ BZ BZ BZ BZ", 2, "WASSIMOUNET", 3))
+
+// let result = await notifService.readAllNotifs("63891a76136dd44526e03e84")
+// console.log(result)
+
 const app = express()
 const port = process.env.PORT
 app.use(cors())
 app.use(express.json())
 
 const routes = getRoutes(services)
-
-console.log(generateAccessToken("ABV"))
 
 for (let i = 0; i < routes.length; i++) {
   const route = routes[i]
