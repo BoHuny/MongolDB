@@ -8,20 +8,29 @@ export default class NotifsService {
         this.userService = userService
     }
 
-    createNotifs(notif) {
+    createNotif(notif) {
         let result = this.notifsCollection.insertOne(notif);
         return result
     }
 
+    async createNotifForOneUser(userID, notif) {
+        await this.notifsCollection.insertOne(notif);
+        await this.userService.addNotifID(userID, notif._id)
+    }
+
     async getNotifs(idUser, isRead) {
-        let user = this.userService.getUserByID(idUser)
-        notifsIds = user.listNotifs
-        allNotifs = []
-        notifsIds.forEach(idNotif => {
-            const queryNotif = {_id: idNotif, isRead: isRead}
+        let user = await this.userService.getUserByID(idUser)
+        let notifsIds = user.listNotifs
+        let allNotifs = []
+        for (let i = 0; i < notifsIds.length; i++) {
+            let notifId = notifsIds[i]
+            const queryNotif = {_id: notifId, isRead: isRead}
             const optionNotif = {}
-            allNotifs.push(this.notifsCollection.findOne(queryNotif, optionNotif))
-        });
+            let resultNotif = await this.notifsCollection.findOne(queryNotif, optionNotif)
+            if(resultNotif !== null){
+                allNotifs.push(resultNotif)
+            }
+        }
         return allNotifs
     }
 }

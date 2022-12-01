@@ -5,7 +5,9 @@ import 'dotenv/config'
 import UsersService from './services/UsersService.js'
 import NotifsService from './services/NotifsService.js'
 
-import { MongoClient } from 'mongodb'
+import { MongoClient, ObjectId } from 'mongodb'
+import User from './model/User.js'
+import Notif from './model/Notif.js'
 
 const uri ="mongodb://20.111.50.245:27017/"
 const database = new MongoClient(uri).db("mongolDB")
@@ -18,7 +20,9 @@ const services = {
     "notifs" : notifService
 }
 
-services.notifs.getNotifs()
+// await services.notifs.createNotifForOneUser(new ObjectId("63891a76136dd44526e03e84"), new Notif("BAISER", 2, "JE VEUX BAISER", 3))
+let notif = await services.notifs.getNotifs(new ObjectId("63891a76136dd44526e03e84"), true)
+console.log(notif)
 
 const app = express()
 const port = process.env.PORT

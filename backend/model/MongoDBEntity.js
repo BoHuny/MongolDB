@@ -1,7 +1,7 @@
 import { ObjectId } from "mongodb"
 
 export default class MongoDBEntity {
-    constructor() {
+    constructor(id = null) {
         if(id === null){
             this._id = new ObjectId
         } else {

@@ -1,4 +1,4 @@
-import MongoDBEntity from './MongoDBEntity'
+import MongoDBEntity from './MongoDBEntity.js'
 
 export default class User extends MongoDBEntity {
     constructor(pseudo, password, description, gender, isHuman) {
