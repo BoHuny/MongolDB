@@ -1,18 +1,17 @@
-export default class Notif{
-    constructor(title, type, description, severity, isRead = false) {
+import MongoDBEntity from './MongoDBEntity'
+
+export default class Notif extends MongoDBEntity {
+    constructor(title, type, description, severity, date = null) {
+        super(null)
+        if(date === null){
+            this.date = new Date()
+        } else {
+            this.date = date
+        }
         this.title = title
-        this.date = new Date()
         this.type = type
         this.description = description
         this.severity = severity
-        this.isRead = isRead
+        this.isRead = false
     }
 }
-
-id:str;
-	title:str;
-	date:datetime;
-	type:int;
-	description:str;
-	severity:int;
-	isRead:boolean;
