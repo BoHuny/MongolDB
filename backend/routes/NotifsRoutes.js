@@ -15,6 +15,14 @@ export default class NotifsRoutes {
     getRoutes() {
         const that = this
         return [
+            
+            new Route("getNotifs", "GET", true, async function (req, res) {
+                const sendOnlyUnread = req.body.sendOnlyUnread
+                const user = await that.usersService.getUserByName(req.user.username)
+                const currentNotifs = await that.notifsService.getNotifsByIDUser(user._id, sendOnlyUnread)
+                that.notifsService.readAllNotifs(user._id)
+                return res.status(200).json(currentNotifs).send()
+            }),
             new Route("askToF", "POST", true, async function (req, res) {
                 const frontAskToF = req.body
                 const newNotif = await that.notifsService.askToF(req.user.username, frontAskToF)
