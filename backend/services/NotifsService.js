@@ -90,14 +90,19 @@ export default class NotifsService {
         return result
     }
 
-    async getNotifsByIDUser(idUser, isRead) {
+    async getNotifsByIDUser(idUser, onlyNotRead) {
         let user = await this.usersService.getUserByID(idUser)
         if(user !== null){
             let notifsIds = user.listNotifs
             let allNotifs = []
             for (let i = 0; i < notifsIds.length; i++) {
                 let notifId = notifsIds[i]
-                const queryNotif = {_id: notifId, isRead: isRead}
+                let queryNotif = null
+                if(onlyNotRead){
+                    queryNotif = {_id: notifId, isRead: false}
+                } else {
+                    queryNotif = {_id: notifId}
+                }
                 const optionNotif = {}
                 let resultNotif = await this.notifsCollection.findOne(queryNotif, optionNotif)
                 if(resultNotif !== null){
