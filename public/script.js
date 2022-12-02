@@ -17,7 +17,7 @@ function onRegisterClick(pseudoId, passwordId, descriptionId, genderId) {
         ),
         dataType: 'json',
         success: function(data){
-            document.cookie = "token="+data;
+            document.cookie = "token="+data.token+";expires=Fri, 31 Dec 2100 23:59:59 UTC";
         },
         error: function(){
             console.log("error")
@@ -43,7 +43,9 @@ function onLoginClick(pseudoId, passwordId){
         dataType:'json',
         success:function(data){
             console.log("Success");
-            document.cookie = "token="+data;
+
+            document.cookie ="token="+data.token+";expires=Fri, 31 Dec 2100 23:59:59 UTC";
+            window.location = "/"
         },
         error:function(){
             console.log("error")
@@ -59,11 +61,9 @@ function getUserList(){
         dataType:'json',
         success:function(data){
             const users = data;
-            console.log(users);
             let list = document.getElementById("myList");
   
             users.forEach((item) => {
-                let li = document.createElement("li");
                 let div = document.createElement("div");
                 let pseudo = item.pseudo;
                 let description = item.description;
@@ -72,15 +72,15 @@ function getUserList(){
                 let button2 = document.createElement("button");
                 button1.id= "askToProtectedF";
                 button2.id= "askToNonProtectedF";
-                button1.setAttribute('onclick',"asktoF('item.id','true')");
-                button2.setAttribute('onclick',"asktoF('item.id','false')");
+                let personId = item._id;
+                button1.setAttribute('onclick',"asktoF('"+personId+"','true','"+button1.id+"')");
+                button2.setAttribute('onclick',"asktoF('"+personId+"','false','"+button2.id+"')");
                 button1.textContent="Lui proposer un rapport protégé";
                 button2.textContent="Lui proposer un rapport non protégé";
                 div.textContent = pseudo+", "+gender+" : "+" \"..."+description+" \"";
                 div.appendChild(button1);
                 div.appendChild(button2);
-                li.appendChild(div);
-                list.appendChild(li);
+                list.appendChild(div);
             });
         },
         error:function(){
@@ -100,7 +100,13 @@ function translateGender(englishGender){
       } 
 }
 
-function asktoF(personId,isProtected){
+function asktoF(personId,isProtected,idButton){
+    
+    document.getElementById(idButton).parentElement.innerHTML = "";
+
+    console.log(personId);
+    console.log(isProtected);
+
 
     $.ajax({
         contentType: 'application/json',
@@ -122,4 +128,21 @@ function asktoF(personId,isProtected){
     })
 
 
+}
+
+function getUserScore(){
+    $.ajax({
+        contentType: 'application-json',
+        dataType:'json',
+        success:function(data){
+            const user = data;
+            let p = document.getElementById("profileContainer");
+            p.textContent = "Mon score = "+user.shownScore;
+        },
+        error:function(){
+            console.log("error")
+        },
+        type: 'GET',
+        url:"http://localhost/getUser"
+    })
 }
