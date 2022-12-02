@@ -1,9 +1,10 @@
 import { ObjectId } from "mongodb"
 
 export default class DiseasesService {
-    constructor(database) {
+    constructor(database, usersService) {
         this.database = database
         this.diseasesCollection = database.collection('diseases')
+        this.usersService = usersService
     }
 
     async createDisease(disease){
@@ -16,6 +17,11 @@ export default class DiseasesService {
         const option = {}
         let disease = await this.diseasesCollection.findOne(query, option);
         return disease
+    }
+
+    async getDiseasesByUserID(idUser){
+        let user = this.usersService.getUserByID(idUser)
+        return user.listDiseases
     }
 
 }

@@ -39,6 +39,10 @@ export default class UsersService {
             $addToSet: {
                 listEvents: new ObjectId(eventID)
             },
+            $inc:{
+                shownScore: 20,
+                realScore: 20
+            }
         };
         const options = { upsert: true };
         const result = await this.usersCollection.updateOne(filter, update, options);
@@ -61,6 +65,18 @@ export default class UsersService {
             const result = await this.usersCollection.updateOne(filter, update, options);
             return result
         }
+    }
+
+    async deleteNotifByID(idUser, idNotif){
+        const filter = { _id: new ObjectId(idUser) }
+            const update = {
+                $pull: {
+                    listNotifs: new ObjectId(idNotif)
+                },
+            };
+            const options = { upsert: true };
+            const result = await this.usersCollection.updateOne(filter, update, options);
+            return result
     }
 
     async getUserByID(idUser) {
