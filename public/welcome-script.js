@@ -31,5 +31,5 @@ function checkParent(t, elm) {
     return false;
 }
 function rules(){
-    alert("Les règles du jeu sont les suivantes:\n-Il faudra baiser un maximum")
+    alert("COMMENT JOUER A MSTinder ? \nLe but du jeu est très simple: tu dois avoir la vie sexuelle la plus épanouie (et la plus saine possible !!)\nTu peux accéder à la liste des joueurs et leur proposer de coucher avec toi, avec protection ou non, pour gagner des points. Attention, respecte leur décision si ça ne les tente pas ;)\nFais bien attention à toi ! Tu peux te retrouver contaminé par un de tes partenaires... Pense à te faire dépister régulièrement pour éviter une mauvais surprise! Tu perdras des points si tu infectes quelqu'un :/\nLe jeu à une durée limitée. A la fin, le gagnant sera le joueur avec le plus haut score !!!");
 }
