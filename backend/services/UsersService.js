@@ -16,6 +16,11 @@ export default class UsersService {
         return users
     }
 
+    async getUsers() {
+        const mongoUsers = await this.usersCollection.find({}).toArray()
+        return mongoUsers
+    }
+
     createUser(user) {
         let result = this.usersCollection.insertOne(user);
         return result

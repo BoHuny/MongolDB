@@ -4,7 +4,9 @@ export function authenticateToken(needAuthent, req, res, next) {
     if (needAuthent) {
         let token = req.headers['authorization']
       
-        if (token == null) return res.sendStatus(401)
+        if (token == null) {
+            res.redirect("/welcome")
+        }
         token = token.split(" ")[1]
 
         jwt.verify(token, process.env.SECRET_JWT_KEY, (err, user) => { 
