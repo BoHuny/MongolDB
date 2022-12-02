@@ -48,7 +48,7 @@ app.use(express.static('public'));
 
 const routes = getRoutes(services)
 
-// await createBots(usersService, diseasesService, 30)
+await createBots(usersService, diseasesService, 30)
 await botAct(usersService, notifsService)
 setInterval(function(){botAct(usersService, notifsService)}, 1000*60)
 
