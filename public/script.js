@@ -146,3 +146,54 @@ function getUserScore(){
         url:"http://localhost/getUser"
     })
 }
+
+
+function getuserNotifs(){
+    $.ajax({
+        contentType: 'application-json',
+        dataType:'json',
+        success:function(data){
+            const notifs = data;
+            let list = document.getElementById("myNotifList");
+            let output = "";
+            notifs.forEach((item) => {
+                let div = document.createElement("div");
+                let title = item.title;
+                let pseudo = item.data.pseudo;
+                let isProtected = item.data.isProtected;
+
+                if (isProtected){
+                    let message = pseudo+ " veut coucher avec toi avec une protection ;)\n";
+                }
+                else{
+                    let message = pseudo+ " veut coucher avec toi sans protection... C'est plus excitant !\n";
+                }
+
+                output += message;
+
+                /*let bloc = document.createElement("p");
+                let next_line = document.createElement("br");
+                let t = document.createElement("b"); 
+                t.textContent = title;
+                bloc.appendChild(t);
+                bloc.append(next_line);
+                bloc.append(message);
+                div.appendChild(bloc);
+                list.appendChild(div);*/
+            });
+
+            if (output===""){
+                return "Aucune notif..."
+            }
+            else{
+                return output;
+            }
+        },
+        error:function(){
+            console.log("error")
+        },
+        type: 'GET',
+        url:"http://localhost/getNotifs"
+    })
+}
+
