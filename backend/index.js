@@ -6,15 +6,9 @@ import UsersService from './services/UsersService.js'
 import NotifsService from './services/NotifsService.js'
 
 import { MongoClient, ObjectId } from 'mongodb'
-import Notif from './model/Notif.js'
-import Disease from './model/Disease.js'
-import Event from './model/Event.js'
-import EnumNotifTypes from './model/EnumNotifTypes.js'
 import { authenticateToken, generateAccessToken } from './utils/jwt.js'
 import DiseasesService from './services/DiseasesService.js'
 import EventsService from './services/EventsService.js'
-import User from './model/User.js'
-import { act } from './utils/mainEvent.js'
 import {createBots, botAct} from './utils/bot.js'
 
 const uri ="mongodb://20.111.50.245:27017/"
@@ -54,7 +48,7 @@ app.use(express.static('public'));
 
 const routes = getRoutes(services)
 
-// await createBots(usersService, diseasesService, 30)
+await createBots(usersService, diseasesService, 30)
 await botAct(usersService, notifsService)
 setInterval(function(){botAct(usersService, notifsService)}, 1000*60)
 
@@ -73,7 +67,6 @@ for (let i = 0; i < routes.length; i++) {
       
   }
 
-act()
 
 app.listen(port, () => {
   console.log(`Server launched and listening to port ${port}`)

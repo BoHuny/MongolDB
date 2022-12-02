@@ -1,10 +1,10 @@
 import MongoDBEntity from './MongoDBEntity.js'
 
 export default class Session extends MongoDBEntity {
-    constructor(proportionInfected, bestUsersID, bestScores) {
+    constructor(proportionInfected, bestUsers, bestScores) {
         super(null)
         this.proportionInfected = proportionInfected
-        this.bestUsersID = bestUsersID
+        this.bestUsers = bestUsers
         this.bestScores = bestScores
     }
 }
