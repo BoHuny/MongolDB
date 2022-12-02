@@ -20,7 +20,12 @@ export default class NotifsRoutes {
                 const sendOnlyUnread = req.body.sendOnlyUnread
                 const user = await that.usersService.getUserByName(req.user.username)
                 const currentNotifs = await that.notifsService.getNotifsByIDUser(user._id, sendOnlyUnread)
-                that.notifsService.readAllNotifs(user._id)
+                for(let i = 0; i < currentNotifs.length; i++){
+                    let notif = currentNotifs[i]
+                    if(!notif.isRead){
+                        that.notifsService.readNotif(notif._id)
+                    }
+                }
                 return res.status(200).json(currentNotifs).send()
             }),
             new Route("askToF", "POST", true, async function (req, res) {
