@@ -11,7 +11,7 @@ export default class UsersRoutes {
         const that = this
         return [
             new Route("getUser", "GET", true, async function(req, res) {
-                const user = await that.usersService.getUserByName(req.body.user.pseudo)
+                const user = await that.usersService.getUserByName(req.user.username)
                 res.status(200).json(user)
             }),
             new Route("getRandomUsers", "GET", false, async function (req, res) {
