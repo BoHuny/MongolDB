@@ -1,4 +1,8 @@
 <link rel="stylesheet" href="../css/style.css">
+
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="../js/script.js"></script>
+
 <div class="wrapper fadeInDown">
     <div id="formContent">
       <!-- Tabs Titles -->
@@ -11,7 +15,7 @@
       </div>
   
       <!-- Login Form -->
-      <form>
+      <form onsubmit="return false">
         <input type="text" id="login" class="fadeIn second" name="login" placeholder="Pseudo">
         <input type="text" id="password" class="fadeIn third" name="login" placeholder="Mot de passe">
         <input type="text" id="description" class="fadeIn fourth" name="description" placeholder="Une description qui déchire !"><br>
@@ -21,7 +25,7 @@
           <option value="men">Homme</option>
           <option value="other">Autre</option>
         </select>
-        <input type="submit" class="fadeIn sixth" value="S'inscire">
+        <input type="submit" id="submit-form" class="fadeIn sixth" value="S'inscrire" onclick="onRegisterClick()">
       </form>
   
   
