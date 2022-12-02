@@ -31,7 +31,7 @@ const services = {
 }
 
 // let user = await userService.getUserByID("63891a76136dd44526e03e84")
-let user = await userService.createUser(new User("Wassim", "motdepasse", "descrption de ouf", "autre", true))
+// let user = await userService.createUser(new User("Wassim", "motdepasse", "descrption de ouf", "autre", true))
 // console.log(user)
 
 // await notifService.createNotifForOneUser("63891a76136dd44526e03e84", new Notif("BZ BZ BZ BZ BZ BZ", 2, "WASSIMOUNET", 3))

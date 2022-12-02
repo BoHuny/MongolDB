@@ -1,5 +1,5 @@
 export default {
-    "wantToF":1,
-    "symptoms":2,
-    "screenings":3
+    wantToF:1,
+    symptoms:2,
+    screenings:3
 }
