@@ -1,4 +1,4 @@
-timeLeft = 0
+let timeLeft = 0
 
 export function act() {
     setTimeLeft(process.env.SESSION_DURATION)
