@@ -1,3 +1,5 @@
+import Route from "./Route.js"
+
 export default class NotifsRoutes {
     constructor(notifsService) {
         this.notifsService = notifsService
@@ -5,6 +7,11 @@ export default class NotifsRoutes {
 
     getRoutes() {
         const that = this
-        return []
+        return [
+            new Route("askToF", "GET", false, async function (req, res) {
+                const randomUsers = await that.usersService.getRandomUsers(10)
+                res.status(200).json(randomUsers)
+            }),
+        ]
     }
 }
