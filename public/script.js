@@ -148,14 +148,16 @@ function getUserScore(){
 }
 
 
-function getuserNotifs(){
+function getUserNotifs(){
+    console.log("IN");
+    var output = ""; 
     $.ajax({
-        contentType: 'application-json',
+        contentType: 'application/json',
         dataType:'json',
         success:function(data){
+            console.log("Success");
             const notifs = data;
             let list = document.getElementById("myNotifList");
-            let output = "";
             notifs.forEach((item) => {
                 let div = document.createElement("div");
                 let title = item.title;
@@ -163,12 +165,12 @@ function getuserNotifs(){
                 let isProtected = item.data.isProtected;
 
                 if (isProtected){
-                    let message = pseudo+ " veut coucher avec toi avec une protection ;)\n";
+                    var message = pseudo+ " veut coucher avec toi avec une protection ;)\n";
                 }
                 else{
-                    let message = pseudo+ " veut coucher avec toi sans protection... C'est plus excitant !\n";
+                    var message = pseudo+ " veut coucher avec toi sans protection... C'est plus excitant !\n";
                 }
-
+                console.log(message);
                 output += message;
 
                 /*let bloc = document.createElement("p");
@@ -181,13 +183,6 @@ function getuserNotifs(){
                 div.appendChild(bloc);
                 list.appendChild(div);*/
             });
-
-            if (output===""){
-                return "Aucune notif..."
-            }
-            else{
-                return output;
-            }
         },
         error:function(){
             console.log("error")
@@ -195,5 +190,11 @@ function getuserNotifs(){
         type: 'GET',
         url:"http://localhost/getNotifs"
     })
+    if (output===""){
+        return "Aucune notif..."
+    }
+    else{
+        return output;
+    }
 }
 
