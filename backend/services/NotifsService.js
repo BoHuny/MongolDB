@@ -15,7 +15,7 @@ export default class NotifsService {
 
     async askToF(username, person) {
         const user = await this.usersService.getUserByName(username)
-        const newNotif = new Notif("Baiser ?", EnumNotifTypes.wantToF, "Veux-tu baiser avec moi ?", 1, {idPersonA:user._id,isProtected:person.protected})
+        const newNotif = new Notif("Baiser ?", EnumNotifTypes.wantToF, "Veux-tu baiser avec moi ?", 1, {idPersonA:user._id,pseudo:user.pseudo,isProtected:person.protected})
         this.createNotifForOneUser(person.idPerson, newNotif)
         return newNotif
     }

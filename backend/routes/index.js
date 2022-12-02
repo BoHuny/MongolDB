@@ -2,7 +2,7 @@ import Bot from "../model/Bot.js"
 import NotifsRoutes from "./NotifsRoutes.js"
 import Route from "./Route.js"
 import UsersRoutes from "./UsersRoutes.js"
-
+import { getTimeLeft } from "../utils/mainEvent.js"
 
 export default (services) => {
     const routesObjects = [
@@ -18,6 +18,12 @@ export default (services) => {
         new Route("welcome", "GET", false, function(req, res) {
             res.redirect("welcome.html");
             res.status(200).send()
+        }),
+        new Route("getTimeLeft", "GET", false, function(req, res) {
+            res.status(200).json(getTimeLeft())
+        }),
+        new Route("getStats", "GET", false, function(req, res) {
+            res.status(200).json(services["users"].getLastSession())
         })
     ]
 

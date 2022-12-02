@@ -12,6 +12,11 @@ export default class DiseasesService {
         return result
     }
 
+    async getDiseases(){
+        const mongoDiseases = await this.diseasesCollection.find({}).toArray()
+        return mongoDiseases
+    }
+
     async getDiseaseByID(idDisease){
         const query = { _id: new ObjectId(idDisease)}
         const option = {}

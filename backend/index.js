@@ -14,18 +14,20 @@ import { authenticateToken, generateAccessToken } from './utils/jwt.js'
 import DiseasesService from './services/DiseasesService.js'
 import EventsService from './services/EventsService.js'
 import User from './model/User.js'
+import { act } from './utils/mainEvent.js'
+import {createBots, botAct} from './utils/bot.js'
 
 const uri ="mongodb://20.111.50.245:27017/"
 const database = new MongoClient(uri).db("mongolDB")
 
-const userService = new UsersService(database)
-const eventsService = new EventsService(database, userService)
+const usersService = new UsersService(database)
+const eventsService = new EventsService(database, usersService)
 const diseasesService = new DiseasesService(database)
-const notifService = new NotifsService(database, userService, eventsService, diseasesService)
+const notifsService = new NotifsService(database, usersService, eventsService, diseasesService)
 
 const services = {
-    "users" : userService,
-    "notifs" : notifService,
+    "users" : usersService,
+    "notifs" : notifsService,
     "diseases": diseasesService,
     "events": eventsService
 }
@@ -52,6 +54,10 @@ app.use(express.static('public'));
 
 const routes = getRoutes(services)
 
+// await createBots(usersService, diseasesService, 30)
+await botAct(usersService, notifsService)
+setInterval(function(){botAct(usersService, notifsService)}, 1000*60)
+
 for (let i = 0; i < routes.length; i++) {
   const route = routes[i]
     if(route.method === "GET") {
@@ -66,6 +72,8 @@ for (let i = 0; i < routes.length; i++) {
     }
       
   }
+
+act()
 
 app.listen(port, () => {
   console.log(`Server launched and listening to port ${port}`)
