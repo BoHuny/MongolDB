@@ -16,6 +16,7 @@ export default class UsersRoutes {
             }),
             new Route("register", "POST", false, async function (req, res) {
                 const frontUser = req.body.user
+                console.log(frontUser)
                 if (await that.usersService.getUserByName(frontUser.pseudo) !== null) {
                     return res.status(403).send()
                 }
