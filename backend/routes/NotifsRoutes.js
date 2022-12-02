@@ -16,7 +16,7 @@ export default class NotifsRoutes {
         const that = this
         return [
             
-            new Route("getNotifs", "GET", true, async function (req, res) {
+            new Route("getNotifs", "POST", true, async function (req, res) {
                 const sendOnlyUnread = req.body.sendOnlyUnread
                 const user = await that.usersService.getUserByName(req.user.username)
                 const currentNotifs = await that.notifsService.getNotifsByIDUser(user._id, sendOnlyUnread)
