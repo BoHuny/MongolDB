@@ -1,6 +1,8 @@
 let timeLeft = 0
+let usersService = null
 
-export function act() {
+export function act(uService) {
+    usersService = uService
     setTimeLeft(process.env.SESSION_DURATION)
     setInterval(tickTimeLeft, 1000)
 }
@@ -13,9 +15,10 @@ function setTimeLeft(t) {
     timeLeft = t
 }
 
-function greatReset(usersService) {
+function greatReset() {
     usersService.setLastSession()
     usersService.resetAllUsers()
+    usersService.getLastSession()
 }
 
 function tickTimeLeft() {

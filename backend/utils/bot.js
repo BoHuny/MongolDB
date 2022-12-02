@@ -19,7 +19,6 @@ export async function createBots(userService, diseasesService, nBots) {
 }
 
 export async function botAct(userService, notifsService) {
-    console.log("Acting bots !...")
     const users = await userService.getUsers()
     for (let i = 0; i < users.length; i++) {
         let user = users[i]
@@ -39,5 +38,4 @@ export async function botAct(userService, notifsService) {
             }
         }
     }
-    console.log("DONE !")
 }

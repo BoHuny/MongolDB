@@ -8,8 +8,10 @@ export default class Bot {
         const gender = Math.random() < 0.5 ? "Homme" : "Femme"
         const description = ""
         this.user = new User(pseudo, password, gender, description, false)
-        if(Math.random()>0.4){
-            this.user.listDiseases.push({diseaseID:allDiseases[Math.floor(Math.random() * allDiseases.length)]._id,startTime:new Date()})
-        }
+
+    }
+
+    addDisease(allDiseases) {
+
     }
 }

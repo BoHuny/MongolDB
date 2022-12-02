@@ -1,3 +1,45 @@
+let timeLeft = 10000000000
+
+setInterval(function(){
+    timeLeft--
+    if(timeLeft >= 0){
+        document.getElementById("timeLeftID").innerHTML = timeLeft;
+    }
+    else {
+        $.ajax({
+            contentType: 'application/json',
+            dataType: 'json',
+            type: 'GET',
+            url: 'http://localhost/getStats',
+            success: function(data){
+                alert(JSON.stringify(data))
+            },
+            error: function(){
+                console.log("error")
+            }
+        })
+        initSessionTime()
+    }
+
+},1000)
+
+initSessionTime()
+
+function initSessionTime(){
+    $.ajax({
+        contentType: 'application/json',
+        dataType: 'json',
+        type: 'GET',
+        url: 'http://localhost/getTimeLeft',
+        success: function(data){
+            timeLeft = data
+        },
+        error: function(){
+            console.log("error")
+        }
+    })
+}
+
 function onRegisterClick(pseudoId, passwordId, descriptionId, genderId) {
     let pseudoVal = document.getElementById(pseudoId).value;
     let passwordVal = document.getElementById(passwordId).value;

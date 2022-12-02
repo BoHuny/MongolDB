@@ -126,18 +126,22 @@ export default class UsersService {
             }
         }
         for (let i = 0; i < Math.min(users.length, 3); i++) {
-            bestUsersID.push(user._uid)
-            bestScores.push(user.realScore)
+            bestUsersID.push(users[i]._id)
+            bestScores.push(users[i].realScore)
         }
         const proportionDiseases = numberDiseases / users.length
         const session = new Session(proportionDiseases, bestUsersID, bestScores)
-        const sessionCollection = this.databasase.collection("sessions")
+        const sessionCollection = this.database.collection("sessions")
         sessionCollection.insertOne(session)
     }
 
     async getLastSession() {
-        const sessionCollection = this.databasase.collection("sessions")
-        const session = await sessionCollection.find().limit(1).sort({$natural:-1})
-        return session
+        const sessionCollection = this.database.collection("sessions")
+        const session = sessionCollection.find().limit(1).sort({$natural:-1})
+        const okSession = []
+        for await (const s of session) {
+            okSession.push(s)
+        }
+        return okSession
     }
 }
