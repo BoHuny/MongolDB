@@ -12,7 +12,7 @@ setInterval(function(){
             type: 'GET',
             url: 'http://localhost/getStats',
             success: function(data){
-                alert(JSON.stringify(data))
+                alert("Résultats de la derniere session : " + JSON.stringify(data))
             },
             error: function(){
                 console.log("error")
