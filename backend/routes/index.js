@@ -9,14 +9,14 @@ export default (services) => {
         new UsersRoutes(services["users"]),
         new NotifsRoutes(services["notifs"], services["events"], services["users"])
     ]
-    
     let routes = [
         new Route("", "GET", true, function (req, res) {
-            res.send   ("Authentified!")
+            console.log(__dirname)
+            res.redirect("homepage.html");
             res.status(200).send()
         }),
         new Route("welcome", "GET", false, function(req, res) {
-            res.send("Welcome!")
+            res.redirect("welcome.html");
             res.status(200).send()
         })
     ]

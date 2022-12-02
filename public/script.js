@@ -44,6 +44,7 @@ function onLoginClick(pseudoId, passwordId){
         success:function(data){
             console.log("Success");
             document.cookie = "token="+data;
+            window.location = "homepage.html"
         },
         error:function(){
             console.log("error")
