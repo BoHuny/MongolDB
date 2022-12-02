@@ -1,5 +1,5 @@
 import fs from 'fs'
-import Bot from '../model/Bot'
+import Bot from '../model/Bot.js'
 
 const data = fs.readFileSync('botNames.txt', 'utf8').split("\r\n")
 
@@ -24,7 +24,7 @@ export function botAct(userService) {
             if (r === i) {
                 r++;
             }
-            
+
         }
     }
 }

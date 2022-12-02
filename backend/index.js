@@ -19,9 +19,9 @@ const uri ="mongodb://20.111.50.245:27017/"
 const database = new MongoClient(uri).db("mongolDB")
 
 const userService = new UsersService(database)
-const notifService = new NotifsService(database, userService)
-const diseaseService = new DiseasesService(database)
 const eventsService = new EventsService(database, userService)
+const notifService = new NotifsService(database, userService, eventsService)
+const diseaseService = new DiseasesService(database)
 
 const services = {
     "users" : userService,
