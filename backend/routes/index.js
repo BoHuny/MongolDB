@@ -7,8 +7,8 @@ import UsersRoutes from "./UsersRoutes.js"
 export default (services) => {
     console.log(new Bot())
     const routesObjects = [
-        new NotifsRoutes(services["notifs"]),
-        new UsersRoutes(services["users"])
+        new UsersRoutes(services["users"]),
+        new NotifsRoutes(services["notifs"], services["events"], services["users"])
     ]
     
     let routes = [

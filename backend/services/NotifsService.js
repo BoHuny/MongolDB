@@ -19,6 +19,20 @@ export default class NotifsService {
         await this.userService.addNotifID(userID, notif._id)
     }
 
+    async getNotifByID(notifId){
+        const queryNotif = {_id: new ObjectId(notifId)}
+        const optionNotif = {}
+        let resultNotif = await this.notifsCollection.findOne(queryNotif, optionNotif)
+        return resultNotif
+    }
+
+    async deleteNotifByID(notifId){
+        const query = {_id: new ObjectId(notifId)}
+        const option = {}
+        let result = await this.notifsCollection.deleteOne(query);
+        return result
+    }
+
     async getNotifsByIDUser(idUser, isRead) {
         let user = await this.userService.getUserByID(idUser)
         if(user !== null){

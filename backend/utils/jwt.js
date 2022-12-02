@@ -2,12 +2,13 @@ import jwt from 'jsonwebtoken'
 
 export function authenticateToken(needAuthent, req, res, next) {
     if (needAuthent) {
-        const token = req.headers['authorization']
+        let token = req.headers['authorization']
       
         if (token == null) {
             res.redirect("/welcome")
         }
-      
+        token = token.split(" ")[1]
+
         jwt.verify(token, process.env.SECRET_JWT_KEY, (err, user) => { 
           if (err) return res.sendStatus(403)
           req.user = user

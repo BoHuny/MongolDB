@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ma page principale</title>
+    <link rel="stylesheet" href="../css/style.css">
+  </head>
+
+  <body>
+
+    <div class="wrapper fadeInDown">
+
+    <h1>Mon profil</h1>
+    
+    <div id='testingContainer'>
+        <p> Ton score : </p>
+        <p> Essaye de rencontrer des personnes et de gagner des points <a href="userList.html"> par ici </a> . </p>
+        
+
+        </div>
+
+
+    <h1>Centre de santé</h1>
+    <div id='testingContainer'>
+        <img src="../img/img1.jpg" width=50% alt="" style='float: right;'/>
+        <p>Pour la petite info : Les IST se transmettent très facilement. 
+            Il n’y a pas toujours de signes visibles et il ne faut pas attendre d’avoir des symptômes pour agir. 
+            Pour savoir si l'on est ou non atteint d'une infection sexuellement transmissible, il est important de se faire dépister. 
+            Si besoin, votre médecin traitant, votre gynécologue ou votre sage femme peuvent vous conseiller et vous prescrire un test de dépistage des IST, à vous et à votre partenaire.
+        </p>
+    <a href="https://www.ameli.fr/assure/sante/themes/mst-ist/depistage#:~:text=D%C3%A9pister%20les%20IST&text=Le%20recours%20au%20d%C3%A9pistage%20des,est%20important%20d'y%20recourir."> En savoir plus </a>
+    <br>
+    <br>
+    <br>
+    <p> Tu sens quelques symptômes ? Tu veux connaître ta situation ? </p>
+    <button type="button" id="homePageButton" onclick=getTestedClick()> Me faire dépister !</button>
+</div>
+
+    </div>
+
+
+    <script>
+      /*Toggle dropdown list*/
+      /*https://gist.github.com/slavapas/593e8e50cf4cc16ac972afcbad4f70c8*/
+
+      var navMenuDiv = document.getElementById("nav-content");
+      var navMenu = document.getElementById("nav-toggle");
+
+      document.onclick = check;
+      function getTestedClick(){
+        window.location.replace("homepage.html");
+      }
+    </script>
+       
+
+  </body>
+
+
+</html>

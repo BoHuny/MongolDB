@@ -38,6 +38,18 @@ export default class UsersService {
         return result
     }
 
+    async addEventID(userID, eventID) {
+        const filter = { _id: new ObjectId(userID) };
+        const update = {
+            $addToSet: {
+                listEvents: new ObjectId(eventID)
+            },
+        };
+        const options = { upsert: true };
+        const result = await this.usersCollection.updateOne(filter, update, options);
+        return result
+    }
+
     async addDiseaseID(userID, diseaseID){
         let user = await this.getUserByID(userID)
         if(!user.listDiseases.some(function(diseaseObjectID, index, array){userID === diseaseObjectID.toString()})){
