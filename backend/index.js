@@ -11,7 +11,7 @@ import DiseasesService from './services/DiseasesService.js'
 import EventsService from './services/EventsService.js'
 import {createBots, botAct} from './utils/bot.js'
 
-const uri ="mongodb://20.111.50.245:27017/"
+const uri ="mongodb://localhost:27017/"
 const database = new MongoClient(uri).db("mongolDB")
 
 const usersService = new UsersService(database)
