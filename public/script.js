@@ -74,8 +74,9 @@ function getUserList(){
                 let button2 = document.createElement("button");
                 button1.id= "askToProtectedF";
                 button2.id= "askToNonProtectedF";
-                button1.setAttribute('onclick',"asktoF('item.id','true')");
-                button2.setAttribute('onclick',"asktoF('item.id','false')");
+                let personId = item._id;
+                button1.setAttribute('onclick',"asktoF('"+personId+"','true')");
+                button2.setAttribute('onclick',"asktoF('"+personId+"','false')");
                 button1.textContent="Lui proposer un rapport protégé";
                 button2.textContent="Lui proposer un rapport non protégé";
                 div.textContent = pseudo+", "+gender+" : "+" \"..."+description+" \"";
@@ -103,6 +104,10 @@ function translateGender(englishGender){
 }
 
 function asktoF(personId,isProtected){
+
+    console.log(personId);
+    console.log(isProtected);
+    
 
     $.ajax({
         contentType: 'application/json',
