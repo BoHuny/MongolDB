@@ -1,31 +1,68 @@
 import { ObjectId } from "mongodb"
-import User from "../model/Notif.js"
+import Notif from "../model/Notif.js"
+import Event from "../model/Event.js"
+import EnumNotifTypes from "../model/EnumNotifTypes.js"
 
 export default class NotifsService {
-    constructor(database, userService, eventsService) {
+    constructor(database, usersService, eventsService, diseasesService) {
         this.database = database
         this.notifsCollection = database.collection('notifs')
         this.usersCollection = database.collection('users')
-        this.userService = userService
+        this.usersService = usersService
+        this.diseasesService = diseasesService
         this.eventsService = eventsService
     }
 
     async askToF(username, person) {
-        const user = await this.userService.getUserByName(username)
+        const user = await this.usersService.getUserByName(username)
         const newNotif = new Notif("Baiser ?", EnumNotifTypes.wantToF, "Veux-tu baiser avec moi ?", 1, {idPersonA:user._id,isProtected:person.protected})
         this.createNotifForOneUser(person.idPerson, newNotif)
         return newNotif
     }
 
     async respondToF(username, person) {
-        const user = await that.usersService.getUserByName(username)
-        let currentNotif = await that.notifsService.getNotifByID(person.idNotif)
+        const userB = await this.usersService.getUserByName(username)
+        let currentNotif = await this.getNotifByID(person.idNotif)
         if(currentNotif == null) {
             return false
         }
+
+        if(person.response){
+            let userA = await this.usersService.getUserByID(currentNotif.data.idPersonA)
+            let isProtected = currentNotif.data.isProtected
+
+            let newDiseasesB = []
+            for (let i = 0; i < userA.listDiseases.length; i++) {
+                let disease = await this.diseasesService.getDiseaseByID(userA.listDiseases[i].diseaseID.toString())
+                let probaTot = 1.
+                if(isProtected){
+                    probaTot *= 0.02
+                }
+                probaTot *= disease.probaTransmission
+                if(Math.random() < probaTot){
+                    await this.usersService.addDiseaseID(userB._id.toString(), disease._id.toString())
+                    newDiseasesB.push(disease._id)
+                }
+            }
+            let newDiseasesA = []
+            for (let i = 0; i < userB.listDiseases.length; i++) {
+                let disease = await this.diseasesService.getDiseaseByID(userB.listDiseases[i].diseaseID.toString())
+                let probaTot = 1.
+                if(isProtected){
+                    probaTot *= 0.02
+                }
+                probaTot *= disease.probaTransmission
+                if(Math.random() < probaTot){
+                    await this.usersService.addDiseaseID(userA._id.toString(), disease._id.toString())
+                    newDiseasesA.push(disease._id)
+                }
+            }
+
+            const newEvent = new Event(userA._id, userB._id, currentNotif.isProtected, newDiseasesA.concat(newDiseasesB))
+            await this.eventsService.createEventForBothUsers(newEvent)
+        }
         await this.deleteNotifByID(currentNotif._id.toString())
-        const newEvent = new Event(currentNotif.data.idPersonA, user._id, currentNotif.isProtected, [])
-        await this.eventsService.createEventForBothUsers(newEvent)
+        await this.usersService.deleteNotifByID(userB._id.toString(), currentNotif._id.toString())
         return true
     }
 
@@ -36,7 +73,7 @@ export default class NotifsService {
 
     async createNotifForOneUser(userID, notif) {
         await this.createNotif(notif);
-        await this.userService.addNotifID(userID, notif._id)
+        await this.usersService.addNotifID(userID, notif._id)
     }
 
     async getNotifByID(notifId){
@@ -54,7 +91,7 @@ export default class NotifsService {
     }
 
     async getNotifsByIDUser(idUser, isRead) {
-        let user = await this.userService.getUserByID(idUser)
+        let user = await this.usersService.getUserByID(idUser)
         if(user !== null){
             let notifsIds = user.listNotifs
             let allNotifs = []

@@ -20,13 +20,13 @@ const database = new MongoClient(uri).db("mongolDB")
 
 const userService = new UsersService(database)
 const eventsService = new EventsService(database, userService)
-const notifService = new NotifsService(database, userService, eventsService)
-const diseaseService = new DiseasesService(database)
+const diseasesService = new DiseasesService(database)
+const notifService = new NotifsService(database, userService, eventsService, diseasesService)
 
 const services = {
     "users" : userService,
     "notifs" : notifService,
-    "diseases": diseaseService,
+    "diseases": diseasesService,
     "events": eventsService
 }
 
