@@ -10,7 +10,7 @@ setInterval(function(){
             contentType: 'application/json',
             dataType: 'json',
             type: 'GET',
-            url: 'http://localhost/getStats',
+            url: 'http://20.111.50.245/getStats',
             success: function(data){
                 alert("Résultats de la derniere session : " + JSON.stringify(data))
             },
@@ -30,7 +30,7 @@ function initSessionTime(){
         contentType: 'application/json',
         dataType: 'json',
         type: 'GET',
-        url: 'http://localhost/getTimeLeft',
+        url: 'http://20.111.50.245/getTimeLeft',
         success: function(data){
             timeLeft = data
         },
@@ -65,7 +65,7 @@ function onRegisterClick(pseudoId, passwordId, descriptionId, genderId) {
             console.log("error")
         },
         type: 'POST',
-        url: 'http://localhost/register'
+        url: 'http://20.111.50.245/register'
     })
   }
 
@@ -93,7 +93,7 @@ function onLoginClick(pseudoId, passwordId){
             console.log("error")
         },
         type: 'POST',
-        url:"http://localhost/connect"
+        url:"http://20.111.50.245/connect"
     })
 }
 
@@ -129,7 +129,7 @@ function getUserList(){
             console.log("error")
         },
         type: 'GET',
-        url:"http://localhost/getRandomUsers"
+        url:"http://20.111.50.245/getRandomUsers"
     })
 }
 function translateGender(englishGender){
@@ -166,7 +166,7 @@ function asktoF(personId,isProtected,idButton){
             console.log("error")
         },
         type: 'POST',
-        url: 'http://localhost/askToF'
+        url: 'http://20.111.50.245/askToF'
     })
 
 
@@ -185,7 +185,7 @@ function getUserScore(){
             console.log("error")
         },
         type: 'GET',
-        url:"http://localhost/getUser"
+        url:"http://20.111.50.245/getUser"
     })
 }
 
@@ -230,7 +230,7 @@ function getUserNotifs(){
             console.log("error")
         },
         type: 'GET',
-        url:"http://localhost/getNotifs"
+        url:"http://20.111.50.245/getNotifs"
     })
     if (output===""){
         return "Aucune notif..."
