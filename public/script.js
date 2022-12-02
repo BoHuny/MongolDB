@@ -143,6 +143,6 @@ function getUserScore(){
             console.log("error")
         },
         type: 'GET',
-        url:"http://localhost/user"
+        url:"http://localhost/getUser"
     })
 }
