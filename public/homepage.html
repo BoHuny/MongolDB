@@ -13,15 +13,6 @@
   <script src="script.js"></script>
 
   <body>
-    <nav id="header" class="bg-white w-full z-30 top-0 text-white py-1 lg:py-6 ">
-      <div
-        class="w-full container mx-auto flex flex-wrap items-end justify-between mt-0 px-2 py-2 lg:py-6"
-      >
-        <div class="pl-4 flex items-end">
-          <img src="packard-bell.png" class= "w-6" onclick="alert(getUserNotifs())"/>
-        </div>
-      </div>
-    </nav>
 
     <div class="wrapper fadeInDown">
 
@@ -33,6 +24,16 @@
         
 
         </div>
+
+        <h1>Mes notifications</h1>
+    
+        <div id='testingContainer'>
+          <div id='notifContainer' class="wrapper fadeInDown">  
+            <ul id="myNotifList"> </ul>
+
+        </div>
+            </div>
+
 
 
     <h1>Centre de santé</h1>
@@ -63,6 +64,7 @@
 
       getUserScore();
 
+      getUserNotifs();
 
 
     </script>
