@@ -3,7 +3,12 @@ function onRegisterClick(pseudoId, passwordId, descriptionId, genderId) {
     let passwordVal = document.getElementById(passwordId).value;
     let descriptionVal = document.getElementById(descriptionId).value;
     let genderVal = document.getElementById(genderId).value;
-
+    console.log({
+        pseudo: pseudoVal,
+        password: passwordVal,
+        description: descriptionVal,
+        gender: genderVal
+    })
     $.ajax({
         contentType: 'application/json',
         data: JSON.stringify(
@@ -18,6 +23,7 @@ function onRegisterClick(pseudoId, passwordId, descriptionId, genderId) {
         ),
         dataType: 'json',
         success: function(data){
+            console.log("Success");
             document.cookie = "token="+data;
         },
         error: function(){
@@ -29,6 +35,7 @@ function onRegisterClick(pseudoId, passwordId, descriptionId, genderId) {
   }
 
 function onLoginClick(pseudoId, passwordId){
+    console.log("IN");
     let pseudoVal =document.getElementById(pseudoId).value;
     let passwordVal = document.getElementById(passwordId).value; 
     $.ajax({
@@ -43,7 +50,8 @@ function onLoginClick(pseudoId, passwordId){
         ),
         dataType:'json',
         success:function(data){
-            document.cookie = "token"=+data;
+            console.log("Success");
+            document.cookie = "token="+data;
         },
         error:function(){
             console.log("error")
