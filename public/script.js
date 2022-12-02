@@ -3,7 +3,7 @@ let timeLeft = 10000000000
 setInterval(function(){
     timeLeft--
     if(timeLeft >= 0){
-        document.getElementById("timeLeftID").innerHTML = timeLeft;
+        document.getElementById("timeLeftID").innerHTML = "Temps restant : " + timeLeft;
     }
     else {
         $.ajax({
