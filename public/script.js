@@ -45,7 +45,7 @@ function onLoginClick(pseudoId, passwordId){
             console.log("Success");
 
             document.cookie ="token="+data.token+";expires=Fri, 31 Dec 2100 23:59:59 UTC";
-            window.location = "homepage.html"
+            window.location = "/"
         },
         error:function(){
             console.log("error")

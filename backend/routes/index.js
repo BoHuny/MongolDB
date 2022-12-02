@@ -11,7 +11,7 @@ export default (services) => {
     ]
     let routes = [
         new Route("", "GET", true, function (req, res) {
-            console.log(__dirname)
+            console.log(req.headers)
             res.redirect("homepage.html");
             res.status(200).send()
         }),
