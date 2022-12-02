@@ -6,8 +6,8 @@ import UsersRoutes from "./UsersRoutes.js"
 
 export default (services) => {
     const routesObjects = [
-        new NotifsRoutes(services["notifs"]),
-        new UsersRoutes(services["users"])
+        new UsersRoutes(services["users"]),
+        new NotifsRoutes(services["notifs"], services["events"], services["users"])
     ]
     
     let routes = [new Route("", "GET", false, function (req, res) {

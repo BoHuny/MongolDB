@@ -1,7 +1,7 @@
 import MongoDBEntity from './MongoDBEntity.js'
 
 export default class Notif extends MongoDBEntity {
-    constructor(title, type, description, severity, date = null) {
+    constructor(title, type, description, severity, data = {}, date = null) {
         super(null)
         if(date === null){
             this.date = new Date()
@@ -13,5 +13,6 @@ export default class Notif extends MongoDBEntity {
         this.description = description
         this.severity = severity
         this.isRead = false
+        this.data = data
     }
 }
