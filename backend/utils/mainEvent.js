@@ -1,8 +1,12 @@
+import { createBots } from './bot.js'
+
 let timeLeft = 0
 let usersService = null
+let diseasesService = null
 
-export function act(uService) {
+export function act(uService, dService) {
     usersService = uService
+    diseasesService = dService
     setTimeLeft(process.env.SESSION_DURATION)
     setInterval(tickTimeLeft, 1000)
 }
@@ -17,8 +21,9 @@ function setTimeLeft(t) {
 
 function greatReset() {
     usersService.setLastSession()
+    usersService.deleteBotUsers()
     usersService.resetAllUsers()
-    usersService.getLastSession()
+    createBots(usersService, diseasesService, 30)
 }
 
 function tickTimeLeft() {

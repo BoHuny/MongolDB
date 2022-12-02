@@ -99,6 +99,10 @@ export default class UsersService {
         return user
     }
 
+    async deleteBotUsers() {
+        await this.usersCollection.deleteMany({isHuman: false})
+    }
+
     async resetAllUsers() {
         await this.usersCollection.updateMany({}, {
             $set: {
@@ -117,7 +121,7 @@ export default class UsersService {
             if (u1.realScore > u2.realScore) return -1;
             if (u1.realScore < u2.realScore) return 1;
         })
-        const bestUsersID = []
+        const bestUsers = []
         const bestScores = []
         let numberDiseases = 0
         for (let i = 0; i < users.length; i++) {
@@ -126,11 +130,11 @@ export default class UsersService {
             }
         }
         for (let i = 0; i < Math.min(users.length, 3); i++) {
-            bestUsersID.push(users[i]._id)
+            bestUsers.push(users[i].pseudo)
             bestScores.push(users[i].realScore)
         }
         const proportionDiseases = numberDiseases / users.length
-        const session = new Session(proportionDiseases, bestUsersID, bestScores)
+        const session = new Session(proportionDiseases, bestUsers, bestScores)
         const sessionCollection = this.database.collection("sessions")
         sessionCollection.insertOne(session)
     }

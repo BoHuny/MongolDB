@@ -3,16 +3,16 @@ let timeLeft = 10000000000
 setInterval(function(){
     timeLeft--
     if(timeLeft >= 0){
-        document.getElementById("timeLeftID").innerHTML = timeLeft;
+        document.getElementById("timeLeftID").innerHTML = "Temps restant : " + timeLeft;
     }
     else {
         $.ajax({
             contentType: 'application/json',
             dataType: 'json',
             type: 'GET',
-            url: 'http://localhost/getStats',
+            url: 'http://20.111.50.245/getStats',
             success: function(data){
-                alert(JSON.stringify(data))
+                alert("Résultats de la derniere session : " + JSON.stringify(data))
             },
             error: function(){
                 console.log("error")
@@ -30,7 +30,7 @@ function initSessionTime(){
         contentType: 'application/json',
         dataType: 'json',
         type: 'GET',
-        url: 'http://localhost/getTimeLeft',
+        url: 'http://20.111.50.245/getTimeLeft',
         success: function(data){
             timeLeft = data
         },
@@ -65,7 +65,7 @@ function onRegisterClick(pseudoId, passwordId, descriptionId, genderId) {
             console.log("error")
         },
         type: 'POST',
-        url: 'http://localhost/register'
+        url: 'http://20.111.50.245/register'
     })
   }
 
@@ -93,7 +93,7 @@ function onLoginClick(pseudoId, passwordId){
             console.log("error")
         },
         type: 'POST',
-        url:"http://localhost/connect"
+        url:"http://20.111.50.245/connect"
     })
 }
 
@@ -129,7 +129,7 @@ function getUserList(){
             console.log("error")
         },
         type: 'GET',
-        url:"http://localhost/getRandomUsers"
+        url:"http://20.111.50.245/getRandomUsers"
     })
 }
 function translateGender(englishGender){
@@ -166,7 +166,7 @@ function asktoF(personId,isProtected,idButton){
             console.log("error")
         },
         type: 'POST',
-        url: 'http://localhost/askToF'
+        url: 'http://20.111.50.245/askToF'
     })
 
 
@@ -185,26 +185,31 @@ function getUserScore(){
             console.log("error")
         },
         type: 'GET',
-        url:"http://localhost/getUser"
+        url:"http://20.111.50.245/getUser"
     })
 }
 
 
 function getUserNotifs(){
-    console.log("IN");
-    var output = ""; 
     $.ajax({
         contentType: 'application/json',
         dataType:'json',
+        data: JSON.stringify(
+            {
+                sendOnlyUnread:false,
+            }),
         success:function(data){
             console.log("Success");
+            console.log(data);
             const notifs = data;
             let list = document.getElementById("myNotifList");
+            let message= "";
             notifs.forEach((item) => {
                 let div = document.createElement("div");
                 let title = item.title;
                 let pseudo = item.data.pseudo;
                 let isProtected = item.data.isProtected;
+                let notifId=item._id;
 
                 if (isProtected){
                     var message = pseudo+ " veut coucher avec toi avec une protection ;)\n";
@@ -213,30 +218,61 @@ function getUserNotifs(){
                     var message = pseudo+ " veut coucher avec toi sans protection... C'est plus excitant !\n";
                 }
                 console.log(message);
-                output += message;
 
-                /*let bloc = document.createElement("p");
+                let bloc = document.createElement("p");
                 let next_line = document.createElement("br");
                 let t = document.createElement("b"); 
                 t.textContent = title;
                 bloc.appendChild(t);
                 bloc.append(next_line);
                 bloc.append(message);
+
                 div.appendChild(bloc);
-                list.appendChild(div);*/
+
+                let button1 = document.createElement("button");
+                let button2 = document.createElement("button");
+                button1.id= "acceptToF";
+                button2.id= "refuseToF";
+                let personId = item._id;
+                button1.setAttribute('onclick',"respondtoF('"+notifId+"','true','"+button1.id+"')");
+                button2.setAttribute('onclick',"respondtoF('"+notifId+"','false','"+button2.id+"')");
+                button1.textContent="Accepter le rapport";
+                button2.textContent="Refuser le rapport";
+                div.appendChild(button1);
+                div.appendChild(button2);
+                list.appendChild(div);
             });
         },
         error:function(){
             console.log("error")
         },
         type: 'GET',
-        url:"http://localhost/getNotifs"
+        url:"http://20.111.50.245/getNotifs"
     })
-    if (output===""){
-        return "Aucune notif..."
-    }
-    else{
-        return output;
-    }
 }
 
+function respondtoF (idNotif,isAccepted, idButton) {
+
+    document.getElementById(idButton).parentElement.innerHTML = "";
+
+
+    $.ajax({
+        contentType: 'application/json',
+        data: JSON.stringify(
+            {
+                idNotif:idNotif,
+                response:isAccepted
+            }
+        ),
+        dataType: 'json',
+        success: function(data){
+            console.log("Success");
+        },
+        error: function(){
+            console.log("error")
+        },
+        type: 'POST',
+        url: 'http://localhost/respondToF'
+    })
+
+}

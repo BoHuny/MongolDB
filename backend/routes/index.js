@@ -6,7 +6,7 @@ import { getTimeLeft } from "../utils/mainEvent.js"
 import { act } from "../utils/mainEvent.js"
 
 export default (services) => {
-    act(services["users"])
+    act(services["users"], services["diseases"])
     const routesObjects = [
         new UsersRoutes(services["users"]),
         new NotifsRoutes(services["notifs"], services["events"], services["users"], services["diseases"])

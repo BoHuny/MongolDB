@@ -11,6 +11,7 @@ export function getRandomName() {
 }
 
 export async function createBots(userService, diseasesService, nBots) {
+    nameIndex = 0
     let allDiseases = await diseasesService.getDiseases()
     for (let i = 0; i < nBots; i++) {
         let bot = new Bot(allDiseases)
