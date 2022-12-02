@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="style.css">
   </head>
 
+  <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+  <script src="script.js"></script>
+
   <body>
 
     <div class="wrapper fadeInDown">
@@ -15,7 +18,7 @@
     <h1>Mon profil</h1>
     
     <div id='testingContainer'>
-        <p> Ton score : </p>
+        <p id='profileContainer' class="wrapper fadeInDown"></p>
         <p> Essaye de rencontrer des personnes et de gagner des points <a href="userList.html"> par ici </a> . </p>
         
 
@@ -42,16 +45,15 @@
 
 
     <script>
-      /*Toggle dropdown list*/
-      /*https://gist.github.com/slavapas/593e8e50cf4cc16ac972afcbad4f70c8*/
 
-      var navMenuDiv = document.getElementById("nav-content");
-      var navMenu = document.getElementById("nav-toggle");
-
-      document.onclick = check;
       function getTestedClick(){
         window.location.replace("homepage.html");
       }
+
+      getUserScore();
+
+
+
     </script>
        
 

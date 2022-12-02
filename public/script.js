@@ -61,7 +61,6 @@ function getUserList(){
         dataType:'json',
         success:function(data){
             const users = data;
-            console.log(users);
             let list = document.getElementById("myList");
   
             users.forEach((item) => {
@@ -129,4 +128,21 @@ function asktoF(personId,isProtected,idButton){
     })
 
 
+}
+
+function getUserScore(){
+    $.ajax({
+        contentType: 'application-json',
+        dataType:'json',
+        success:function(data){
+            const user = data;
+            let p = document.getElementById("profileContainer");
+            p.textContent = "Mon score = "+user.shownScore;
+        },
+        error:function(){
+            console.log("error")
+        },
+        type: 'GET',
+        url:"http://localhost/getUser"
+    })
 }
