@@ -17,7 +17,7 @@ function onRegisterClick(pseudoId, passwordId, descriptionId, genderId) {
         ),
         dataType: 'json',
         success: function(data){
-            document.cookie = "token="+data;
+            document.cookie = "token="+data.token+";expires=Fri, 31 Dec 2100 23:59:59 UTC";
         },
         error: function(){
             console.log("error")
@@ -43,7 +43,8 @@ function onLoginClick(pseudoId, passwordId){
         dataType:'json',
         success:function(data){
             console.log("Success");
-            document.cookie = "token="+data;
+
+            document.cookie ="token="+data.token+";expires=Fri, 31 Dec 2100 23:59:59 UTC";
         },
         error:function(){
             console.log("error")
