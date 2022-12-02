@@ -14,6 +14,7 @@ import { authenticateToken, generateAccessToken } from './utils/jwt.js'
 import DiseasesService from './services/DiseasesService.js'
 import EventsService from './services/EventsService.js'
 import User from './model/User.js'
+import { act } from './utils/mainEvent.js'
 
 const uri ="mongodb://20.111.50.245:27017/"
 const database = new MongoClient(uri).db("mongolDB")
@@ -66,6 +67,8 @@ for (let i = 0; i < routes.length; i++) {
     }
       
   }
+
+act()
 
 app.listen(port, () => {
   console.log(`Server launched and listening to port ${port}`)

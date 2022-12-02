@@ -1,4 +1,5 @@
 import { ObjectId } from "mongodb";
+import Session from "../model/Session.js";
 import User from "../model/User.js"
 
 export default class UsersService {
@@ -96,5 +97,47 @@ export default class UsersService {
         const optionUser = {}
         let user = await this.usersCollection.findOne(queryUser, optionUser);
         return user
+    }
+
+    async resetAllUsers() {
+        await this.usersCollection.updateMany({}, {
+            $set: {
+                shownScore: 0,
+                realScore: 0,
+                listDiseases: [],
+                listNotifs: [],
+                listEvents: []
+            }
+        });
+    }
+
+    async setLastSession() {
+        const users = await this.getUsers()
+        users.sort(function(u1, u2) {
+            if (u1.realScore > u2.realScore) return -1;
+            if (u1.realScore < u2.realScore) return 1;
+        })
+        const bestUsersID = []
+        const bestScores = []
+        let numberDiseases = 0
+        for (let i = 0; i < users.length; i++) {
+            if (users[i].listDiseases.length > 0) {
+                numberDiseases++;
+            }
+        }
+        for (let i = 0; i < Math.min(users.length, 3); i++) {
+            bestUsersID.push(user._uid)
+            bestScores.push(user.realScore)
+        }
+        const proportionDiseases = numberDiseases / users.length
+        const session = new Session(proportionDiseases, bestUsersID, bestScores)
+        const sessionCollection = this.databasase.collection("sessions")
+        sessionCollection.insertOne(session)
+    }
+
+    async getLastSession() {
+        const sessionCollection = this.databasase.collection("sessions")
+        const session = await sessionCollection.find().limit(1).sort({$natural:-1})
+        return session
     }
 }
