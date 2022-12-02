@@ -29,7 +29,6 @@ export default class UsersRoutes {
             }),
             new Route("connect", "POST", false, async function (req, res) {
                 const frontUser = req.body.user
-                console.log(req.body)
                 const user = await that.usersService.getUserByName(frontUser.pseudo)
                 if (user !== null && user.password === frontUser.password) {
                     return res.status(200).json({token: generateAccessToken(frontUser.pseudo)})

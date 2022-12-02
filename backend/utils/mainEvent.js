@@ -23,7 +23,6 @@ function greatReset() {
 
 function tickTimeLeft() {
     timeLeft--
-    console.log(timeLeft)
     if (timeLeft <= 0) {
         greatReset()
         setTimeLeft(process.env.SESSION_DURATION)
